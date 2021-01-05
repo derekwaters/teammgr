@@ -1,0 +1,137 @@
+
+
+/
+/register
+/login
+/user/:id
+/user/   (your own profile)
+/team/:id
+/team/:id/season/:id/event/:id
+/team/:id/photo/:id
+/club/:id
+
+
+
+
+
+
+
+
+
+Data:
+
+club
+
+
+
+team
+- id
+- name
+- league
+- clubid
+- sport
+- iskidsteam
+- coachuserids[]
+- manageruserids[]
+- playerdetails[]
+  - userid
+  - number
+  - position
+  - note
+- homevenueid
+- teamemail
+- teamphone
+- teamwebsite
+- settings
+  - require invitations
+  - retain privacy when sending emails
+  - who can send messages?
+  - let people volunteer for roles
+  - randomly assign roles
+  - send duty reminder
+- gameduties
+  - name
+  - defaultuserid
+  - requiresaccreditationtype
+- trainingduties
+  - name
+  - defaultuserid
+  - requiresaccreditationtype
+- messages
+- season[]
+  - id
+  - name
+  - event[] (training/game)
+    - id
+    - type (training/game)
+    - teamid
+	- seasonid
+	- date/time
+	- duration
+	- venueid
+	- note
+	- createdbyuserid
+	- createdondatetime
+	- home/away
+	- players
+	  - userid
+	  - status (confirmed/invited/declined/rosteredoff)
+	- duties
+	  - userid
+	- result
+	  - ourscore
+	  - theirscore
+      - outcome (win/lose/draw/no result)
+- resources
+  - name
+  - type (link / upload)
+  - url
+  - fileblob
+  - filetype
+  - filesize
+- photo
+	- photoblob
+	- photosize
+	- phototype
+	- date/time
+	- uploadedbyuserid
+	- eventid
+	- tags[]
+
+user (parent / player)
+- id
+- name
+- birthdate
+- email[]
+- parent[]
+  - name
+  - email
+  - phone
+- medical details
+  - doctorname
+  - doctorphone
+  - doctoremail
+  - doctoraddress
+  - allergies[]
+  - othermedicalnotes
+- accreditations
+  - type
+  - expirydate
+- settings
+  
+
+venue
+- id
+- name
+- address
+
+
+
+notifications
+- recipients
+- message
+- event
+- from
+
+payments
+- ???
