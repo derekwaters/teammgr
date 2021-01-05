@@ -1,3 +1,22 @@
+[TeamMgr]                                                                 [  ] Profile / Settings / Logout
+
+[    MenuBit    ]
+
+
+
+/activity
+/notifications
+/calendar
+/duties
+/photos
+/teams
+/profiles
+/settings
+/users/logout
+
+
+
+
 
 
 /

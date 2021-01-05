@@ -39,6 +39,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Serve static files
+app.use(express.static('dist'));
+
 // Flash
 app.use(flash());
 app.use((req, res, next) => {
