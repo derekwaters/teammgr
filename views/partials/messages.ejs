@@ -1,14 +1,23 @@
+
 <% if (typeof errors != 'undefined') { %>
+<div class="alert alert-warning" role="alert">
 <%  errors.forEach(function(error) { %>
 <p> <%= error.msg %></p>
 <%  }) %>
+</div>
 <% } %>
 <% if (typeof success_msg != 'undefined' && success_msg != '') { %>
+<div class="alert alert-success" role="alert">
 <p><%= success_msg %></p>
+</div>
 <% } %>
 <% if (typeof error_msg != 'undefined' && error_msg != '') { %>
+<div class="alert alert-danger" role="alert">
 <%= error_msg %>
+</div>
 <% } %>
 <% if (typeof error != 'undefined' && error != '') { %>
+<div class="alert alert-danger" role="alert">
 <%= error %>
+</div>
 <% } %>
