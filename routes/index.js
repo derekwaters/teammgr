@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const {ensureAuthenticated} = require('../config/auth.js');
-const Team = require('../models/team');
 
 router.get('/', (req, res) => {
 	res.render('welcome');
@@ -15,15 +14,5 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
 		user: req.user
 	});
 });
-router.get('/teams', ensureAuthenticated, (req, res) => {
-	console.log(req);
-	Team.findByMemberUserId(req.user.id, function(err, teams) {
-		res.render('teams', {
-			user: req.user,
-			teams: teams
-		});
-	});
-});
-
 module.exports = router;
 
