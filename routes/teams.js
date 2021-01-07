@@ -14,6 +14,7 @@ router.get('/', ensureAuthenticated, (req, res) => {
 
 router.get('/new', ensureAuthenticated, (req, res) => {
     res.render('newTeam', {
+        user: req.user
         // Dunno, do we need anything here?
     });
 });
