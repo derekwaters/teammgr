@@ -236,4 +236,8 @@ const TeamSchema = new mongoose.Schema({
 
 const Team = mongoose.model('Team', TeamSchema);
 
+Team.findByMemberUserId = function(userId, callback) {
+    this.find({ 'players.userId' : userId }, callback);
+};
+
 module.exports = Team;
