@@ -5,8 +5,38 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 
 router.get('/login', (req, res) => {
-	res.render('login');
+	console.log('ON LOGIN ATTEMPT:')
+	console.log(req.query);
+	var redirectAfter = (req.query.redirectAfter !== undefined ? req.query.redirectAfter : '/dashboard');
+	console.log('redirectAfter is ' + redirectAfter);
+	res.render('login', {
+		redirectAfter: redirectAfter
+	});
 });
+
+router.post('/login', (req, res, next) => {
+	var redirectAfter = (req.body.redirectAfter !== undefined ? req.body.redirectAfter : '/dashboard');
+	console.log('ON LOGIN COMPLETE');
+	console.log('redirectAfter is ' + redirectAfter);
+	passport.authenticate(
+		'local', {
+			successRedirect: redirectAfter,
+			failureRedirect: '/users/login',
+			failureFlash: true
+		}
+	) (req, res, next);
+});
+
+router.get('/logout', (req, res, next) => {
+	req.logout();
+	req.flash('success_msg', 'Now logged out');
+	res.redirect('/users/login');
+});
+
+
+
+
+
 router.get('/register', (req, res) => {
 	res.render('register');
 });
@@ -97,21 +127,6 @@ router.post('/register', async (req, res) => {
 			}
 		});
 	}
-});
-router.post('/login', (req, res, next) => {
-	passport.authenticate(
-		'local', {
-			successRedirect: '/dashboard',
-			failureRedirect: '/users/login',
-			failureFlash: true
-		}
-	) (req, res, next);
-});
-
-router.get('/logout', (req, res, next) => {
-	req.logout();
-	req.flash('success_msg', 'Now logged out');
-	res.redirect('/users/login');
 });
 
 module.exports = router;

@@ -4,7 +4,6 @@ const Team = require('../models/team');
 const {ensureAuthenticated} = require('../config/auth.js');
 
 router.get('/', ensureAuthenticated, (req, res) => {
-	console.log(req);
 	Team.findByMemberUserId(req.user.id, function(err, teams) {
 		res.render('teams', {
 			user: req.user,
@@ -13,7 +12,13 @@ router.get('/', ensureAuthenticated, (req, res) => {
 	});
 });
 
-router.post('/', ensureAuthenticated, (req, res) => {
+router.get('/new', ensureAuthenticated, (req, res) => {
+    res.render('newTeam', {
+        // Dunno, do we need anything here?
+    });
+});
+
+router.post('/new', ensureAuthenticated, (req, res) => {
 	console.log('------------ POST A TEAM --------------');
 	console.log(req.body);
 	console.log('------------ POST A TEAM END ----------');

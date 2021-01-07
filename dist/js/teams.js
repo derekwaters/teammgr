@@ -2,6 +2,7 @@
 
 function initPage ()
 {
+    /*
     var theBtn = $('#addTeamDlgaddTeamBtn');
     theBtn.on('click', function(event) {
         var form = $('#addTeamForm')[0];
@@ -31,9 +32,5 @@ function initPage ()
         }
         form.classList.add('was-validated');
     });
+    */
 };
-
-function addTeamResponse (data, status, xhr) {
-    alert('All done');
-    console.log(data);
-}

@@ -9,7 +9,6 @@ router.get('/register', (req, res) => {
 	res.render('register');
 });
 router.get('/dashboard', ensureAuthenticated, (req, res) => {
-	console.log(req);
 	res.render('dashboard', {
 		user: req.user
 	});

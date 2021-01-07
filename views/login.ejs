@@ -13,6 +13,9 @@
 					<label for="password" class="form-label">Password</label>
 					<input type="password" class="form-control" name="password">
 				</div>
+				<% if (typeof redirectAfter != 'undefined' && redirectAfter != '') { %>
+				<input type="hidden" name="redirectAfter" value="<%= redirectAfter %>">
+				<% } %>
 				<button type="submit" class="btn btn-primary">Login</button>
 			</form>
 		</div>

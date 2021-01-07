@@ -2,78 +2,7 @@
 <%- include ('./partials/messages') %>
 <div 
 <h4>List Of Teams Here</h4>
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTeamDlg">Add Team</button>
 
-
-<!-- Modals -->
-<!-- Vertically centered scrollable modal -->
-<div class="modal fade" id="addTeamDlg" tabindex="-1" aria-labelledby="addTeamDlgLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Add Team</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="addTeamForm">
-                    <div class="mb-3">
-                        <label for="teamNameEdit" class="form-label">Team Name</label>
-                        <input type="text" class="form-control" id="teamNameEdit" name="name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="teamLeagueEdit" class="form-label">League</label>
-                        <input type="text" class="form-control" id="teamLeagueEdit" name="league">
-                    </div>
-                    <div class="mb-3">
-                        <label for="teamClubSelect" class="form-label">Club</label>
-                        <select class="form-select" aria-label="Club" id="teamClubSelect" name="club">
-                            <option selected>No Club</option>
-                            <option value="someId">Caulfield Bears</option>
-                            <option value="someId2">Murrumbeena Lions</option>
-                            <option value="someId3">Ormond Blues</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="teamSportList" class="form-label">Sport</label>
-                        <input class="form-control" list="sportListOptions" id="teamSportList" name="sport" placeholder="Type to search..." required>
-                        <datalist id="sportListOptions">
-                            <option value="American Football">
-                            <option value="Australian Rules Football">
-                            <option value="Soccer">
-                            <option value="Basketball">
-                            <option value="Netball">
-                        </datalist>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="kidsTeam" value="" id="teamKidsCheck" checked>
-                        <label class="form-check-label" for="teamKidsCheck">
-                            Kids Team
-                        </label>
-                    </div>
-                    <div class="mb-3">
-                        <label for="teamHomeVenueEdit" class="form-label">Home Venue Address</label>
-                        <input type="text" class="form-control" id="teamHomeVenueEdit" name="homeVenue">
-                    </div>
-                    <div class="mb-3">
-                        <label for="teamEmailEdit" class="form-label">Team Email</label>
-                        <input type="email" class="form-control" id="teamEmailEdit" name="email">
-                    </div>
-                    <div class="mb-3">
-                        <label for="teamPhoneEdit" class="form-label">Team Phone</label>
-                        <input type="phone" class="form-control" id="teamPhoneEdit" name="phone">
-                    </div>
-                    <div class="mb-3">
-                        <label for="teamWebsiteEdit" class="form-label">Team Website</label>
-                        <input type="text" class="form-control" id="teamWebsiteEdit" name="website">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="addTeamDlgaddTeamBtn">Add Team</button>
-            </div>
-        </div>
-    </div>
-</div>
+<a href="/teams/new" class="btn btn-primary">Add Team</a>
 
 <script src="/js/teams.js" ></script>
