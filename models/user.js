@@ -19,6 +19,10 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
+    phone: {
+        type: String,
+        required: true
+    },
     parent: [
         {
             name: {
@@ -48,12 +52,8 @@ const UserSchema = new mongoose.Schema({
         doctorPhone: String,
         doctorEmail: String,
         doctorAddress: String,
-        allergies: [
-            {
-                name: String
-            }
-        ],
-        othernotes: String
+        allergies: String,
+        otherNotes: String
     },
     accreditations: [
         {

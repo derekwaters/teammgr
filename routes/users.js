@@ -13,10 +13,11 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async (req, res) => {
 
-	const {name,email, password, password2} = req.body;
+	const {name,email, password, password2, birthdate, phone, doctorName, doctorPhone, doctorEmail, doctorAddress, allergies, medicalNotes} = req.body;
+
 	let errors = [];
 	console.log(' Name ' + name+ ' email :' + email+ ' pass:' + password);
-	if (!name || !email || !password || !password2) {
+	if (!name || !email || !password || !password2 || !birthdate) {
 		errors.push({msg : "Please fill in all fields"})
 	}
 	if (password !== password2) {
@@ -33,7 +34,15 @@ router.post('/register', async (req, res) => {
 			name : name,
 			email : email,
 			password : password,
-			password2 : password2});
+			password2 : password2,
+			birthdate : birthdate,
+			phone: phone,
+			doctorName: doctorName,
+			doctorPhone: doctorPhone,
+			doctorEmail: doctorEmail,
+			doctorAddress: doctorAddress,
+			allergies: allergies,
+			medicalNotes: medicalNotes});
 	} else {
 		//validation passed
 		console.log('About to find existing?');
@@ -46,12 +55,32 @@ router.post('/register', async (req, res) => {
 					name : name,
 					email : email,
 					password : password,
-					password2 : password2});
+					password2 : password2,
+					birthdate : birthdate,
+					phone: phone,
+					doctorName: doctorName,
+					doctorPhone: doctorPhone,
+					doctorEmail: doctorEmail,
+					doctorAddress: doctorAddress,
+					allergies: allergies,
+					medicalNotes: medicalNotes});
 			} else {
 				const newUser = new User({
 					name: name,
 					email: email,
-					password: password
+					password: password,
+					birthdate: birthdate,
+					phone: phone,
+					phoneVerified: false,
+					emailVerified: false,
+					medicalDetails: {
+						doctorName: doctorName,
+						doctorPhone: doctorPhone,
+						doctorEmail: doctorEmail,
+						doctorAddress: doctorAddress,
+						allergies: allergies,
+						otherNotes: medicalNotes
+					}
 				});
 				bcrypt.genSalt(10, (err, salt) => {
 					bcrypt.hash(newUser.password, salt, 
