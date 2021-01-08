@@ -3,12 +3,13 @@ const router = express.Router();
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
+const path = require('path');
 
 router.get('/login', (req, res) => {
-	console.log('ON LOGIN ATTEMPT:')
-	console.log(req.query);
+	// console.log('ON LOGIN ATTEMPT:')
+	// console.log(req.query);
 	var redirectAfter = (req.query.redirectAfter !== undefined ? req.query.redirectAfter : '/dashboard');
-	console.log('redirectAfter is ' + redirectAfter);
+	// console.log('redirectAfter is ' + redirectAfter);
 	res.render('login', {
 		redirectAfter: redirectAfter
 	});
@@ -16,8 +17,8 @@ router.get('/login', (req, res) => {
 
 router.post('/login', (req, res, next) => {
 	var redirectAfter = (req.body.redirectAfter !== undefined ? req.body.redirectAfter : '/dashboard');
-	console.log('ON LOGIN COMPLETE');
-	console.log('redirectAfter is ' + redirectAfter);
+	// console.log('ON LOGIN COMPLETE');
+	// console.log('redirectAfter is ' + redirectAfter);
 	passport.authenticate(
 		'local', {
 			successRedirect: redirectAfter,
@@ -34,7 +35,19 @@ router.get('/logout', (req, res, next) => {
 });
 
 
-
+/* User Icons */
+router.get('/:userId/image', (req, res) => {
+	User.findById(req.params.userId, (err, user) => {
+		if (!err &&
+			user.icon !== undefined &&
+			user.icon.length > 0) {
+			res.send(user.icon);
+		} else {
+			var defaultIconPath = path.resolve(__dirname, '../dist/images/user.png');
+			res.sendFile(defaultIconPath);
+		} 
+	});
+});
 
 
 router.get('/register', (req, res) => {

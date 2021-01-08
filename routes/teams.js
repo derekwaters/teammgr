@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Team = require('../models/team');
+const User = require('../models/user');
 const {ensureAuthenticated} = require('../config/auth.js');
 
 router.get('/', ensureAuthenticated, (req, res) => {
@@ -18,10 +19,23 @@ router.get('/:teamId', ensureAuthenticated, (req, res) => {
         if (err) {
             res.status(404);
         } else {
-            res.render('team', {
-                user: req.user,
-                team: team
-            })
+            var playerIds = [];
+            team.players.forEach(function(player) {
+                playerIds.push(player.userId);
+            });
+            User.find().where('_id').in(playerIds).exec((err, linkedUsers) => {
+                var resultMap = {};
+                linkedUsers.forEach((user) => {
+                    resultMap[user._id] = user;
+                });
+                team.players.forEach(function(player) {
+                    player.user = resultMap[player.userId];
+                });
+                res.render('team', {
+                    user: req.user,
+                    team: team
+                });
+            });
         }
     });
 });

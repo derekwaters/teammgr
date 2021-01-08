@@ -39,6 +39,10 @@ const UserSchema = new mongoose.Schema({
             }
         }
     ],
+    icon: {
+        type: Buffer,
+        required: false
+    },
     phoneVerified: {
         type: Boolean,
         default: false
