@@ -1,0 +1,9 @@
+.navbar-horizontal
+{
+    flex-direction: row;
+}
+
+.navbar-horizontal li
+{
+  padding: 0 5px;
+}
