@@ -5,9 +5,6 @@ const {ensureAuthenticated} = require('../config/auth.js');
 
 router.get('/', ensureAuthenticated, (req, res) => {
 	Team.findByMemberUserId(req.user.id, function(err, teams) {
-        console.log('Teams are:');
-        console.log(teams);
-
 		res.render('teams', {
 			user: req.user,
 			teams: teams
@@ -15,6 +12,23 @@ router.get('/', ensureAuthenticated, (req, res) => {
 	});
 });
 
+/* Handlers for opening a team page */
+router.get('/:teamId', ensureAuthenticated, (req, res) => {
+    Team.findById(req.params.teamId, function(err, team) {
+        if (err) {
+            res.status(404);
+        } else {
+            res.render('team', {
+                user: req.user,
+                team: team
+            })
+        }
+    });
+});
+
+
+
+/* Handlers for adding new teams */
 router.get('/new', ensureAuthenticated, (req, res) => {
     res.render('newTeam', {
         user: req.user

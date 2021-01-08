@@ -1,0 +1,32 @@
+<h1><%= team.name %></h1>
+<%- include ('./partials/messages') %>
+
+
+<ul class="nav nav-tabs" id="teamTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="detailsTab" data-bs-toggle="tab" href="#details" role="tab" aria-controls="details" aria-selected="true">Details</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="playersTab" data-bs-toggle="tab" href="#players" role="tab" aria-controls="players" aria-selected="false">Players</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="eventsTab" data-bs-toggle="tab" href="#events" role="tab" aria-controls="events" aria-selected="false">Events</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="rolesTab" data-bs-toggle="tab" href="#roles" role="tab" aria-controls="roles" aria-selected="false">Roles</a>
+    </li>
+</ul>
+<div class="tab-content" id="teamTabContent">
+    <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="detailsTab">
+        <h4>Details Go Here</h4>
+    </div>
+    <div class="tab-pane fade" id="players" role="tabpanel" aria-labelledby="playersTab">
+        <h4>Players go here</h4>
+    </div>
+    <div class="tab-pane fade" id="events" role="tabpanel" aria-labelledby="eventsTab">
+        <h4>Events go here</h4>
+    </div>
+    <div class="tab-pane fade" id="roles" role="tabpanel" aria-labelledby="rolesTab">
+        <h4>Roles go here</h4>
+    </div>
+</div>
