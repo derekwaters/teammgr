@@ -5,6 +5,9 @@ const {ensureAuthenticated} = require('../config/auth.js');
 
 router.get('/', ensureAuthenticated, (req, res) => {
 	Team.findByMemberUserId(req.user.id, function(err, teams) {
+        console.log('Teams are:');
+        console.log(teams);
+
 		res.render('teams', {
 			user: req.user,
 			teams: teams
@@ -20,9 +23,6 @@ router.get('/new', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/new', ensureAuthenticated, (req, res) => {
-	console.log('------------ POST A TEAM --------------');
-	console.log(req.body);
-	console.log('------------ POST A TEAM END ----------');
 	// Check permissions
 	var newTeam = new Team({
         name: req.body.name,
@@ -31,7 +31,13 @@ router.post('/new', ensureAuthenticated, (req, res) => {
         sport: req.body.sport,
         isKidsTeam: (req.body.kidsTeam !== undefined),
         managerIds: [ req.user.id ],
-        players: [],
+        /*
+        players: [
+            {
+                userId: req.user.id
+            }
+        ],
+        */
         // homeVenueId: TODO,
         teamEmail: req.body.email,
         teamPhone: req.body.phone,
@@ -40,20 +46,15 @@ router.post('/new', ensureAuthenticated, (req, res) => {
     });
     newTeam.save().then((value) => {
         console.log(value);
-        res.send(
-            {
-                newTeam: newTeam,
-                success: true
-            }
+        res.redirect(
+            '/teams'
         );
     }).catch((value) => {
         console.log(value);
-        res.send(
-            {
-                newTeam: null,
-                success: false
-            }
-        )
+        req.flash('error_msg', value);
+        res.redirect(
+            '/teams/new'
+        );
     });
 });
 

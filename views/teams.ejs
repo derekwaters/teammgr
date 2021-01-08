@@ -1,7 +1,21 @@
 <h1>Teams</h1>
 <%- include ('./partials/messages') %>
 <div 
-<h4>List Of Teams Here</h4>
+<h4>Your Teams</h4>
+
+
+
+<% teams.forEach(function(team){ %>
+    <a href="/teams/<%= team.id %>" class="card">
+        <div class="card-body">
+            <h5 class="card-title"><%= team.name %></h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            
+        </div>
+    </a>
+<% }); %>
+
+
 
 <a href="/teams/new" class="btn btn-primary">Add Team</a>
 

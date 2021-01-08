@@ -237,7 +237,15 @@ const TeamSchema = new mongoose.Schema({
 const Team = mongoose.model('Team', TeamSchema);
 
 Team.findByMemberUserId = function(userId, callback) {
-    this.find({ 'players.userId' : userId }, callback);
+    console.log('userId is ' + userId);
+
+    { $or: [ { quantity: { $lt: 20 } }, { price: 10 } ] }
+
+
+    this.find({ "$or" : [ 
+        { 'players.userId' : userId },
+        { 'coachIds' : userId },
+        { 'managerIds' : userId } ]}, callback);
 };
 
 module.exports = Team;
