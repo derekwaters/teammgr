@@ -27,9 +27,8 @@
 	</div>
 	<div class="mb-3">
 		<label for="userPhone" class="form-label">Mobile Phone</label>
-		<input type="phone" class="form-control" id="userPhone" name="phone" value="<%= typeof phone != 'undefined' ? phone : '' %>">
+		<input type="phone" class="form-control" id="userPhone" name="phone" required value="<%= typeof phone != 'undefined' ? phone : '' %>">
 	</div>
-
 	<div class="card">
 		<div class="card-body">
 			<h5 class="card-title">Medical Details</h5>
