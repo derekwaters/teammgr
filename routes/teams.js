@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Team = require('../models/team');
 const User = require('../models/user');
+const Venue = require('../models/venue');
 const {ensureAuthenticated} = require('../config/auth.js');
+const dateAndTime = require('date-and-time');
 
 router.get('/', ensureAuthenticated, (req, res) => {
 	Team.findByMemberUserId(req.user.id, function(err, teams) {
@@ -83,6 +85,110 @@ router.post('/new', ensureAuthenticated, (req, res) => {
         res.redirect(
             '/teams/new'
         );
+    });
+});
+
+
+
+/* Handlers for adding new events fora  team */
+router.get('/:teamId/events/new', ensureAuthenticated, (req, res) => {
+    Team.findById(req.params.teamId, function(err, team) {
+        if (err) {
+            res.status(404);
+        } else {
+            if (team.isManagingUser(req.user.id)) {
+                res.render('newEvent', {
+                    user: req.user,
+                    team: team
+                });
+            } else {
+                res.redirect(team.getUrl());
+            }
+        }
+    });
+});
+
+router.post('/:teamId/events/new', ensureAuthenticated, (req, res) => {
+    Team.findById(req.params.teamId, function(err, team) {
+        if (err) {
+            res.status(404);
+        } else {
+            if (team.isManagingUser(req.user.id)) {
+                // This will add a new season if it doesn't
+                // already exist.
+                //
+                var theSeason = team.getSeason(req.body.season);
+
+                console.log(req.body);
+                console.log(theSeason);
+
+                Venue.findByAddress(req.body.venue, function(venue) {
+                    var startDateTime = dateAndTime.parse(req.body.startDate, 'YYYY-MM-DD');
+                    var tempTime = dateAndTime.parse(req.body.startTime, 'HH:mm');
+                    startDateTime.setHours(tempTime.getHours());
+                    startDateTime.setMinutes(tempTime.getMinutes());
+
+                    console.log(venue);
+
+                    var newEvent = {
+                        isMatch : req.body.isMatch ? true : false,
+                        teamId : team.id,
+                        seasonId : theSeason.id,
+                        startDateTime : startDateTime,
+                        duration : req.body.duration,
+                        createdByUserId : req.user.id,
+                        createdOnDateTime : new Date(),
+                        venueId: venue.id,
+                        notes: req.body.notes,
+                        isAtHome : req.body.isAtHome ? true : false,
+                        players: [],
+                        duties: []
+                    }
+                    for (var i in team.players) {
+                        newEvent.players.push({
+                            userId: team.players[i].id,
+                            status: 1
+                        });
+                    }
+                    if (newEvent.isMatch) {
+                        for (var j in team.matchDuties) {
+                            newEvent.duties.push({
+                                name: team.matchDuties[j].name,
+                                assignedToUserId: (team.matchDuties[j].defaultUserId)
+                            });
+                        }
+                    }
+                    else {
+                        for (var j in team.trainingDuties) {
+                            newEvent.duties.push({
+                                name: team.trainingDuties[j].name,
+                                assignedToUserId: (team.trainingDuties[j].defaultUserId)
+                            });
+                        }
+                    }
+                    theSeason.events.push(newEvent);
+
+                    console.log('---- About to update the team ----');
+                    console.log(team);
+                    console.log('----------------------------------');
+
+                    team.save().then((value) => {
+                        console.log(value);
+                        res.redirect(
+                            team.getUrl()
+                        );
+                    }).catch((value) => {
+                        console.log(value);
+                        req.flash('error_msg', value);
+                        res.redirect(
+                            '/teams/new'
+                        );
+                    });
+                });
+            } else {
+                res.redirect(team.getUrl());
+            }
+        }
     });
 });
 

@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
 
 
+// Player Status:
+// 0 - Unavailable
+// 1 - No Response
+// 2 - Rostered Off
+// 3 - Confirmed
+
+
 const EventSchema = new mongoose.Schema({
     isMatch: {
         type: Boolean,
@@ -234,12 +241,45 @@ const TeamSchema = new mongoose.Schema({
     ]
 });
 
+TeamSchema.methods.isManagingUser = function (userId) {
+    console.log('Checking access for ' + userId);
+
+    console.log(this.coachIds);
+    console.log(this.managerIds);
+
+    if (this.coachIds.includes(userId) ||
+        this.managerIds.includes(userId))
+    {
+        return true;   
+    }
+    return false;
+}
+
+TeamSchema.methods.getUrl = function () {
+    return '/teams/' + this.id;
+}
+
+TeamSchema.methods.getSeason = function (seasonName) {
+    for (var i in this.seasons) {
+        if (this.seasons[i].name == seasonName) {
+            return this.seasons[i];
+        }
+    }
+    var newSeason = {
+        name: seasonName,
+        events: []
+    };
+    var theSeason = this.seasons.create(newSeason);
+    this.seasons.push(theSeason);
+    return theSeason;
+}
+
 const Team = mongoose.model('Team', TeamSchema);
 
 Team.findByMemberUserId = function(userId, callback) {
     console.log('userId is ' + userId);
 
-    { $or: [ { quantity: { $lt: 20 } }, { price: 10 } ] }
+    // { $or: [ { quantity: { $lt: 20 } }, { price: 10 } ] }
 
 
     this.find({ "$or" : [ 
