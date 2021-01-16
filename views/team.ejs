@@ -33,8 +33,26 @@
     </div>
     <div class="tab-pane fade" id="events" role="tabpanel" aria-labelledby="eventsTab">
         <h4>Upcoming Events</h4>
-
+        <% upcomingEvents.forEach(function(event) {  %>
+            <div class="card">
+                <div class="card-body">
+                    <h6><%= event.opponent %></h6>
+                    <p><%= event.startDateTime %></p>
+                    <p><%= event.duration %></p>
+                </div>
+            </div>
+        <% }); %>
         <a href="/teams/<%= team.id %>/events/new" class="btn btn-primary">Add Event</a>
+        <h4>Past Events</h4>
+        <% pastEvents.forEach(function(event) {  %>
+            <div class="card">
+                <div class="card-body">
+                    <h6><%= event.opponent %></h6>
+                    <p><%= event.startDateTime %></p>
+                    <p><%= event.duration %></p>
+                </div>
+            </div>
+        <% }); %>
     </div>
     <div class="tab-pane fade" id="roles" role="tabpanel" aria-labelledby="rolesTab">
         <h4>Roles go here</h4>

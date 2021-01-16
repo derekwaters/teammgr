@@ -17,6 +17,10 @@ const EventSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
+    opponent: {
+        type: String,
+        required: true
+    },
     startDateTime: {
         type: Date,
         required: true

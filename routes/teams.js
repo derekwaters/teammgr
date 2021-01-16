@@ -36,6 +36,7 @@ router.get('/:teamId', ensureAuthenticated, (req, res) => {
 
                 var upcoming = [];
                 var past = [];
+                var now = new Date();
 
                 for (var ev in team.events) {
                     var theEvent = team.events[ev];
@@ -150,6 +151,7 @@ router.post('/:teamId/events/new', ensureAuthenticated, (req, res) => {
                         teamId : team.id,
                         startDateTime : startDateTime,
                         duration : req.body.duration,
+                        opponent: req.body.opponent,
                         createdByUserId : req.user.id,
                         createdOnDateTime : new Date(),
                         venueId: venue.id,
