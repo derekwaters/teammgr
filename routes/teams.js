@@ -33,9 +33,30 @@ router.get('/:teamId', ensureAuthenticated, (req, res) => {
                 team.players.forEach(function(player) {
                     player.user = resultMap[player.userId];
                 });
+
+                var upcoming = [];
+                var past = [];
+
+                for (var ev in team.events) {
+                    var theEvent = team.events[ev];
+                    if (theEvent.startDateTime < now) {
+                        past.push(theEvent);
+                    } else {
+                        upcoming.push(theEvent);
+                    }
+                }
+                past.sort((a, b) => {
+                    return a.startDateTime - b.startDateTime;
+                });
+                upcoming.sort((a, b) => { 
+                    return b.startDateTime - a.startDateTime;
+                });
+                
                 res.render('team', {
                     user: req.user,
-                    team: team
+                    team: team,
+                    pastEvents: past,
+                    upcomingEvents: upcoming
                 });
             });
         }
@@ -114,13 +135,7 @@ router.post('/:teamId/events/new', ensureAuthenticated, (req, res) => {
             res.status(404);
         } else {
             if (team.isManagingUser(req.user.id)) {
-                // This will add a new season if it doesn't
-                // already exist.
-                //
-                var theSeason = team.getSeason(req.body.season);
-
-                console.log(req.body);
-                console.log(theSeason);
+                // console.log(req.body);
 
                 Venue.findByAddress(req.body.venue, function(venue) {
                     var startDateTime = dateAndTime.parse(req.body.startDate, 'YYYY-MM-DD');
@@ -133,7 +148,6 @@ router.post('/:teamId/events/new', ensureAuthenticated, (req, res) => {
                     var newEvent = {
                         isMatch : req.body.isMatch ? true : false,
                         teamId : team.id,
-                        seasonId : theSeason.id,
                         startDateTime : startDateTime,
                         duration : req.body.duration,
                         createdByUserId : req.user.id,
@@ -166,7 +180,7 @@ router.post('/:teamId/events/new', ensureAuthenticated, (req, res) => {
                             });
                         }
                     }
-                    theSeason.events.push(newEvent);
+                    team.events.push(newEvent);
 
                     console.log('---- About to update the team ----');
                     console.log(team);

@@ -5,15 +5,6 @@
         <label for="teamNameEdit" class="form-label">Team</label>
         <input type="text" class="form-control" id="teamNameEdit" name="name" readonly placeholder="<%= team.name %>">
     </div>
-    <div class="mb-3">
-        <label for="seasonNameList" class="form-label">Season</label>
-        <input class="form-control" list="seasonOptions" id="seasonNameList" name="season" placeholder="Type to search..." required>
-        <datalist id="seasonOptions">
-            <% for (var i in team.seasons) { var theSeason = team.seasons[i]; %>
-            <option value="<%= theSeason.name %>"/>
-            <% } %>
-        </datalist>
-    </div>
     <input type="hidden" name="isMatch" value="1"/>
 	<div class="mb-3">
 		<label for="datePicker" class="form-label">Date</label>

@@ -17,10 +17,6 @@ const EventSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
-    seasonId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true
-    },
     startDateTime: {
         type: Date,
         required: true
@@ -83,16 +79,6 @@ const EventSchema = new mongoose.Schema({
             required: false
         }
     }
-});
-
-const SeasonSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    events: [
-        EventSchema
-    ]
 });
 
 
@@ -208,8 +194,8 @@ const TeamSchema = new mongoose.Schema({
             sent: Date
         }
     ],
-    seasons: [
-        SeasonSchema
+    events: [
+        EventSchema
     ],
     resources: [
         {
@@ -257,21 +243,6 @@ TeamSchema.methods.isManagingUser = function (userId) {
 
 TeamSchema.methods.getUrl = function () {
     return '/teams/' + this.id;
-}
-
-TeamSchema.methods.getSeason = function (seasonName) {
-    for (var i in this.seasons) {
-        if (this.seasons[i].name == seasonName) {
-            return this.seasons[i];
-        }
-    }
-    var newSeason = {
-        name: seasonName,
-        events: []
-    };
-    var theSeason = this.seasons.create(newSeason);
-    this.seasons.push(theSeason);
-    return theSeason;
 }
 
 const Team = mongoose.model('Team', TeamSchema);
