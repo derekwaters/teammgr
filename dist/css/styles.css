@@ -15,9 +15,11 @@
     text-align: center;
 }
 
+/*
 .profile-header-img {
-    /* padding: 54px; */
+    padding: 54px;
 }
+*/
 
 .profile-header-img > img.img-circle {
     width: 80px;
